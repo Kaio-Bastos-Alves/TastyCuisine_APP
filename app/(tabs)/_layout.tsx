@@ -3,12 +3,20 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{
-      headerShown: false,
-      tabBarStyle: { backgroundColor: '#1A1A1A', borderTopColor: '#333', height: 60 },
-      tabBarActiveTintColor: '#E74C3C',
-      tabBarInactiveTintColor: '#888',
-    }}>
+    <Tabs 
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { 
+          backgroundColor: '#d10e0eff', // Seu vermelho personalizado
+          borderTopColor: '#690202ff', 
+          height: 65,
+          paddingBottom: 10,
+          paddingTop: 5
+        },
+        tabBarActiveTintColor: '#F8D775', 
+        tabBarInactiveTintColor: '#FFF', // Branco para melhor contraste no vermelho
+      }}
+    >
       <Tabs.Screen 
         name="home" 
         options={{ 
@@ -21,6 +29,13 @@ export default function TabsLayout() {
         options={{ 
           title: 'Favoritos',
           tabBarIcon: ({ color }) => <Ionicons name="heart" size={24} color={color} />
+        }} 
+      />
+      <Tabs.Screen 
+        name="post" 
+        options={{ 
+          title: 'Postar',
+          tabBarIcon: ({ color }) => <Ionicons name="add-circle" size={32} color={color} />
         }} 
       />
       <Tabs.Screen 

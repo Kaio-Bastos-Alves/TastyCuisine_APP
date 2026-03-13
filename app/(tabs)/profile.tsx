@@ -9,7 +9,6 @@ export default function ProfileScreen() {
   const MENU_ITEMS = [
     { icon: 'person-outline', label: 'Editar Perfil' },
     { icon: 'notifications-outline', label: 'Notificações' },
-    { icon: 'card-outline', label: 'Pagamentos' },
     { icon: 'help-circle-outline', label: 'Ajuda' },
   ];
 

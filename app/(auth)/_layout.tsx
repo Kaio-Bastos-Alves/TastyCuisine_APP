@@ -7,18 +7,17 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <Stack screenOptions={{ headerShown: false }}>
-          {/* Rota Inicial (Splash) */}
+          {/* Telas Iniciais */}
           <Stack.Screen name="index" />
-          
-          {/* Grupo de Autenticação */}
           <Stack.Screen name="(auth)/login" />
           <Stack.Screen name="(auth)/register" />
-          
-          {/* Grupo de Onboarding (Preferências) */}
           <Stack.Screen name="(onboarding)/preferences" />
           
-          {/* Grupo Principal (Home - que criaremos a seguir) */}
+          {/* O Stack chama o grupo (tabs), que tem sua própria barra inferior */}
           <Stack.Screen name="(tabs)" />
+          
+          {/* Tela de Detalhes do Prato (fora das abas) */}
+          <Stack.Screen name="dish/[id]" />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>
