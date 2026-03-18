@@ -1,14 +1,13 @@
 import LGContainer from '../../src/components/LGContainer';
 
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 
 export default function LoginScreen() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <LGContainer liquidColor="#E74C3C" fillLevel={0.4}>
       <Image source={require('../../assets/images/TastiLogo.png')} style={styles.logo} />
       <Text style={styles.title}>Login</Text>
       <TextInput style={styles.input} placeholder="Email" />
@@ -19,12 +18,11 @@ export default function LoginScreen() {
       <TouchableOpacity onPress={() => router.push('/register')}>
         <Text style={styles.link}>Não tem conta? Cadastre-se</Text>
       </TouchableOpacity>
-    </View>
+    </LGContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8D775', alignItems: 'center', justifyContent: 'center', padding: 20 },
   logo: { width: 100, height: 100, marginBottom: 20 },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
   input: { width: '100%', height: 50, backgroundColor: '#FFF', borderRadius: 8, paddingHorizontal: 15, marginBottom: 15 },

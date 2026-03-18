@@ -1,8 +1,7 @@
 import LGContainer from '../../src/components/LGContainer';
 
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -14,7 +13,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <LGContainer liquidColor="#E74C3C" fillLevel={0.4}>
       <Image 
         source={require('../../assets/images/TastiLogo.png')} 
         style={styles.logo} 
@@ -37,18 +36,11 @@ export default function RegisterScreen() {
       <TouchableOpacity onPress={() => router.push('/login')}>
         <Text style={styles.link}>Já tem uma conta? <Text style={styles.linkBold}>Faça Login</Text></Text>
       </TouchableOpacity>
-    </ScrollView>
+    </LGContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flexGrow: 1, 
-    backgroundColor: '#F8D775', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    padding: 20 
-  },
   logo: { 
     width: 100, 
     height: 100, 
