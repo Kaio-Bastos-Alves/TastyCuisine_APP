@@ -6,7 +6,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   return (
-    <LGContainer liquidColor="#E74C3C" fillLevel={0.4}>
+    <LGContainer liquidColor="#FF6347" fillLevel={0.4}>
       <Image source={require('../../assets/images/TastiLogo.png')} style={styles.logo} />
       <Text style={styles.title}>Login</Text>
       <TextInput style={styles.input} placeholder="Email" />
@@ -22,10 +22,10 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  logo: { width: 100, height: 100, marginBottom: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  input: { width: '100%', height: 50, backgroundColor: '#FFF', borderRadius: 8, paddingHorizontal: 15, marginBottom: 15 },
-  button: { width: '100%', height: 50, backgroundColor: '#E74C3C', borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  buttonText: { color: '#FFF', fontWeight: 'bold' },
-  link: { marginTop: 15 }
+  logo: { width: 120, height: 120, marginBottom: 20, tintColor: '#FFF' },
+  title: { fontSize: 32, fontWeight: 'bold', marginBottom: 20, color: '#FFF', textShadowColor: 'rgba(0, 0, 0, 0.3)', textShadowOffset: { width: 0, height: 2 }, textShadowRadius: 4 },
+  input: { width: '80%', height: 50, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: 12, paddingHorizontal: 20, color:'#FFF', fontSize: 16, borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.3) ', marginBottom: 15 },
+  button: { width: '80%', height: 55, marginTop: 10, backgroundColor: '#FF6347', borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  buttonText: {fontSize: 18, color: '#FFF', fontWeight: 'bold' },
+  link: { marginTop: 20, color: '#FFF', textDecorationLine: 'underline', fontSize: 16 },
 });

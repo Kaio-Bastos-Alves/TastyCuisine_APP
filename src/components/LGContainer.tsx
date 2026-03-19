@@ -3,9 +3,8 @@ import { View, StyleSheet, Dimensions, Animated, Easing } from 'react-native';
 import { BlurView } from 'expo-blur';
 import Svg, { Path } from 'react-native-svg';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-// Definindo os tipos para o TypeScript
 interface LGContainerProps {
   children: React.ReactNode;
   liquidColor?: string;
@@ -13,37 +12,74 @@ interface LGContainerProps {
 }
 
 export default function LGContainer({ children, liquidColor = '#E74C3C', fillLevel = 0.45 }: LGContainerProps) {
-  const waveAnim = useRef(new Animated.Value(0)).current;
+  const waveAnim1 = useRef(new Animated.Value(0)).current;
+  const waveAnim2 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.loop(
-      Animated.timing(waveAnim, {
+      Animated.timing(waveAnim1, {
         toValue: 1,
-        duration: 3000,
-        easing: Easing.linear,
+        duration: 3000, // Velocidade da primeira onda
+        easing: Easing.inOut(Easing.quad), // Movimento mais suave
         useNativeDriver: true,
       })
     ).start();
-  }, [waveAnim]);
 
-  const translateX = waveAnim.interpolate({
+    Animated.loop(
+      Animated.timing(waveAnim2, {
+        toValue: 1,
+        duration: 4500, // Velocidade da segunda onda (mais lenta)
+        easing: Easing.inOut(Easing.quad), // Movimento mais suave
+        delay: 1500, // Começa com um pequeno atraso
+        useNativeDriver: true,
+      })
+    ).start();
+  }, [waveAnim1, waveAnim2]);
+
+  const translateX1 = waveAnim1.interpolate({
     inputRange: [0, 1],
     outputRange: [-width, 0],
   });
+
+  const translateX2 = waveAnim2.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -width],
+  });
+
+  // Ajuste a altura da onda para ser mais dinâmica
+  const waveHeight = 30; // Altura base da onda
 
   return (
     <View style={styles.container}>
       <BlurView intensity={60} tint="dark" style={styles.glassCard}>
         <View style={[styles.liquidContainer, { height: `${fillLevel * 100}%` }]}>
-          <Animated.View style={[styles.waveWrapper, { transform: [{ translateX }] }]}>
-            <Svg height="60" width={width * 2} viewBox={`0 0 ${width * 2} 60`}>
-              <Path d={`M 0 30 Q ${width / 2} 0 ${width} 30 T ${width * 2} 30 V 60 H 0 Z`} fill={liquidColor} opacity={0.4} />
+          {/* Primeira Onda */}
+          <Animated.View style={[styles.waveWrapper, { transform: [{ translateX: translateX1 }] }]}>
+            <Svg height={waveHeight * 2} width={width * 2} viewBox={`0 0 ${width * 2} ${waveHeight * 2}`}>
+              <Path 
+                d={`M 0 ${waveHeight} Q ${width / 2} 0 ${width} ${waveHeight} T ${width * 2} ${waveHeight} V ${waveHeight * 2} H 0 Z`}
+                fill={liquidColor}
+                opacity={0.8} // Um pouco mais transparente para a primeira onda
+                stroke="none"
+              />
             </Svg>
           </Animated.View>
-          <View style={[styles.liquidBase, { backgroundColor: liquidColor, opacity: 0.4 }]} />
+
+          {/* Segunda Onda (com offset e cor ligeiramente diferente) */}
+          <Animated.View style={[styles.waveWrapper, { transform: [{ translateX: translateX2 }], top: -waveHeight / 2 }]}>
+            <Svg height={waveHeight * 2} width={width * 2} viewBox={`0 0 ${width * 2} ${waveHeight * 2}`}>
+              <Path 
+                d={`M 0 ${waveHeight} Q ${width / 4} ${waveHeight * 1.5} ${width / 2} ${waveHeight} T ${width * 2} ${waveHeight} V ${waveHeight * 2} H 0 Z`}
+                fill={liquidColor}
+                opacity={0.6} // Mais transparente para a segunda onda
+                stroke="none"
+              />
+            </Svg>
+          </Animated.View>
+
+          <View style={[styles.liquidBase, { backgroundColor: liquidColor, opacity: 1 }]} />
         </View>
 
-        {/* AQUI É ONDE O CHILDREN APARECE */}
         <View style={styles.content}>
           {children}
         </View>
@@ -56,8 +92,7 @@ export default function LGContainer({ children, liquidColor = '#E74C3C', fillLev
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'transparent' },
-  glassCard: { flex: 1, width: '100%', height: '100%', borderRadius: 0, overflow: 'hidden', borderWidth: 0, backgroundColor: 'rgba(217, 251, 255, 0.73)' },
-  liquidContainer: { position: 'absolute', bottom: 0, left: 0, right: 0, overflow: 'hidden' },
+glassCard: { flex: 1, width: '100%', height: '100%', borderRadius: 0, overflow: 'hidden', borderWidth: 0, backgroundColor: 'hsl(178, 100%, 95%)' },  liquidContainer: { position: 'absolute', bottom: 0, left: 0, right: 0, overflow: 'hidden' },
   waveWrapper: { position: 'absolute', top: -30, width: width * 2 },
   liquidBase: { flex: 1, marginTop: 25 },
   content: { flex: 1, padding: 30, justifyContent: 'center', alignItems: 'center', zIndex: 10 },

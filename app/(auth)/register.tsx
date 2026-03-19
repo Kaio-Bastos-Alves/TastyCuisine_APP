@@ -12,7 +12,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <LGContainer liquidColor="#E74C3C" fillLevel={0.4}>
+    <LGContainer liquidColor="#FF6347" fillLevel={0.4}>
       <Image 
         source={require('../../assets/images/TastiLogo.png')} 
         style={styles.logo} 
@@ -22,10 +22,12 @@ export default function RegisterScreen() {
       <Text style={styles.subtitle}>Junte-se à TastyCuisine e descubra novos sabores!</Text>
 
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="Nome Completo" placeholderTextColor="#666" />
-        <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" placeholderTextColor="#666" />
-        <TextInput style={styles.input} placeholder="Senha" secureTextEntry placeholderTextColor="#666" />
-        <TextInput style={styles.input} placeholder="Confirmar Senha" secureTextEntry placeholderTextColor="#666" />
+        <TextInput style={styles.input} placeholder="Nome Completo" placeholderTextColor="#DDD" />
+        <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" placeholderTextColor="#DDD"/>
+        <TextInput style={styles.input} placeholder="Senha" secureTextEntry placeholderTextColor="#DDD"/>
+        <TextInput style={styles.input} placeholder="Confirmar Senha" secureTextEntry placeholderTextColor="#DDD" />
+        
+
       </View>
 
       <TouchableOpacity style={styles.button} onPress={() => router.replace('/preferences')}>
@@ -42,40 +44,42 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   logo: { 
     width: 100, 
+    tintColor: '#FFF',
     height: 100, 
     marginBottom: 20,
     resizeMode: 'contain'
   },
   title: { 
-    fontSize: 28, 
+    fontSize: 32, 
     fontWeight: 'bold', 
-    color: '#333',
+    color: '#FFF',
     marginBottom: 5 
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',
+    color: '#EEE',
     marginBottom: 30,
     textAlign: 'center'
   },
   inputContainer: {
-    width: '100%',
+    width: '85%',
   },
   input: { 
     width: '100%', 
-    height: 55, 
-    backgroundColor: '#FFF', 
+    height: 50,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 12, 
-    paddingHorizontal: 15, 
+    paddingHorizontal: 20,
+    color: '#FFF',
     marginBottom: 15,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#EBC44F'
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   button: { 
-    width: '100%', 
+    width: '85%', 
     height: 55, 
-    backgroundColor: '#E74C3C', 
+    backgroundColor: '#FF6347',
     borderRadius: 12, 
     alignItems: 'center', 
     justifyContent: 'center',
@@ -89,11 +93,12 @@ const styles = StyleSheet.create({
   },
   link: { 
     marginTop: 20, 
-    color: '#333',
+    color: '#FFF',
     fontSize: 15
   },
   linkBold: {
     fontWeight: 'bold',
-    color: '#E74C3C'
+    color: '#FFD700',
+    textDecorationLine: 'underline'
   }
 });
