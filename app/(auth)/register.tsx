@@ -14,7 +14,7 @@ export default function RegisterScreen() {
   return (
     <LGContainer liquidColor="#FF6347" fillLevel={0.4}>
       <Image 
-        source={require('../../assets/images/TastiLogo.png')} 
+        source={require('../../assets/images/profile.png')} 
         style={styles.logo} 
       />
       
@@ -44,7 +44,6 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   logo: { 
     width: 100, 
-    tintColor: '#FFF',
     height: 100, 
     marginBottom: 20,
     resizeMode: 'contain'

@@ -1,109 +1,241 @@
-import { default as BlurView } from 'expo-blur';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Animated, Dimensions, FlatList, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
-import { default as React, useEffect, useRef, useState } from 'react';
-import { Animated, Easing, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Svg, { default as Path } from 'react-native-svg';
+import { QUESTIONS, Question, Option } from '../../src/data/questions';
+import LGContainer from '../../src/components/LGContainer';
 
-const CATEGORIES = [
-  { id: '1', name: 'Italiana' },
-  { id: '2', name: 'Japonesa' },
-  { id: '3', name: 'Mexicana' },
-  { id: '4', name: 'Brasileira' },
-  { id: '5', name: 'Vegana' },
-  { id: '6', name: 'Sobremesas' },
-  { id: '7', name: 'Árabe' },
-  { id: '8', name: 'Francesa' },
-];
+const { width } = Dimensions.get('window');
 
 export default function PreferencesScreen() {
-  const [selected, setSelected] = useState<string[]>([]);
   const router = useRouter();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string[] }>({});
+  const progressAnim = useRef(new Animated.Value(0)).current;
 
-  const toggleCategory = (id: string) => {
-    if (selected.includes(id)) {
-      setSelected(selected.filter(item => item !== id));
+  const currentQuestion: Question = QUESTIONS[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === QUESTIONS.length - 1;
+  const isFirstQuestion = currentQuestionIndex === 0;
+
+  useEffect(() => {
+    const progress = (currentQuestionIndex + 1) / QUESTIONS.length;
+    Animated.timing(progressAnim, {
+      toValue: progress,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [currentQuestionIndex]);
+
+  const toggleOption = (questionId: string, optionId: string) => {
+    setSelectedAnswers(prev => {
+      const currentSelections = prev[questionId] || [];
+      if (currentSelections.includes(optionId)) {
+        return { ...prev, [questionId]: currentSelections.filter(id => id !== optionId) };
+      } else {
+        return { ...prev, [questionId]: [...currentSelections, optionId] };
+      }
+    });
+  };
+
+  const handleNext = () => {
+    if (isLastQuestion) {
+      // Aqui você pode salvar as preferências do usuário
+      console.log('Preferências Salvas:', selectedAnswers);
+      router.replace('/home'); // Redireciona para a home após a última pergunta
     } else {
-      setSelected([...selected, id]);
+      setCurrentQuestionIndex(prev => prev + 1);
     }
   };
 
-  const handleContinue = () => {
-    // Navega para a Home (que está dentro do grupo (tabs))
-    router.replace('/home');
+  const handleBack = () => {
+    if (!isFirstQuestion) {
+      setCurrentQuestionIndex(prev => prev - 1);
+    }
+  };
+
+  const renderOption = ({ item }: { item: Option }) => {
+    const isSelected = selectedAnswers[currentQuestion.id]?.includes(item.id);
+    return (
+      <TouchableOpacity
+        style={[
+          styles.optionCard,
+          isSelected && styles.optionCardSelected
+        ]}
+        onPress={() => toggleOption(currentQuestion.id, item.id)}
+      >
+        <Text style={[
+          styles.optionText,
+          isSelected && styles.optionTextSelected
+        ]}>{item.text}</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>O que você gosta de comer?</Text>
-        <Text style={styles.subtitle}>Selecione pelo menos 3 categorias para personalizarmos sua experiência.</Text>
+    <LGContainer liquidColor="#FF6347" fillLevel={0.4}>
+      <View style={styles.progressBarContainer}>
+        <Animated.View 
+          style={[
+            styles.progressBarFill,
+            { width: progressAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0%', '100%'],
+              })
+            }
+          ]}
+        />
+      </View>
 
+      <View style={styles.questionCard}>
+        <Text style={styles.questionText}>{currentQuestion.question}</Text>
         <FlatList
-          data={CATEGORIES}
-          numColumns={2}
+          data={currentQuestion.options}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.card,
-                selected.includes(item.id) && styles.cardSelected
-              ]}
-              onPress={() => toggleCategory(item.id)}
-            >
-              <Text style={[
-                styles.cardText,
-                selected.includes(item.id) && styles.cardTextSelected
-              ]}>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.list}
+          renderItem={renderOption}
+          numColumns={2} // Para exibir em duas colunas como no Figma
+          contentContainerStyle={styles.optionsList}
         />
 
-        <TouchableOpacity 
-          style={[styles.button, selected.length < 3 && styles.buttonDisabled]}
-          disabled={selected.length < 3}
-          onPress={handleContinue}
-        >
-          <Text style={styles.buttonText}>Continuar</Text>
-        </TouchableOpacity>
+        <View style={styles.navigationButtons}>
+          <TouchableOpacity 
+            style={[styles.navButton, isFirstQuestion && styles.navButtonDisabled]}
+            onPress={handleBack}
+            disabled={isFirstQuestion}
+          >
+            <Text style={styles.navButtonText}>Voltar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={handleNext}
+          >
+            <Text style={styles.navButtonText}>{isLastQuestion ? 'Finalizar' : 'Avançar'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </SafeAreaView>
+    </LGContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8D775' },
-  content: { flex: 1, padding: 20, paddingTop: 40 },
-  title: { fontSize: 28, fontWeight: 'bold', color: '#333', marginBottom: 10 },
-  subtitle: { fontSize: 16, color: '#666', marginBottom: 30 },
-  list: { paddingBottom: 20 },
-  card: {
-    flex: 1,
-    height: 100,
-    backgroundColor: '#FFF',
-    margin: 8,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 3,
+  progressBarContainer: {
+    width: '85%',
+    height: 12,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 6,
+    marginTop: 40,
+    marginBottom: 30,
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  cardSelected: { backgroundColor: '#E74C3C' },
-  cardText: { fontSize: 16, fontWeight: '600', color: '#333' },
-  cardTextSelected: { color: '#FFF' },
-  button: {
-    backgroundColor: '#E74C3C',
-    height: 55,
-    borderRadius: 12,
-    justifyContent: 'center',
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: '#FF6347',
+    borderRadius: 6,
+  },
+  questionCard: {
+    width: '110%',
+    height: '80%',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 25,
+    padding: 10,
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 12,
+    borderColor: 'rgba(255,255,255,0.2)',
+    borderWidth: 1,
   },
-  buttonDisabled: { backgroundColor: '#ccc' },
-  buttonText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' },
+  questionText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFF',
+    marginBottom: 25,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0,0,0,0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  optionsList: {
+    justifyContent: 'space-around',
+    width: '95%',
+    paddingHorizontal: 5,
+  },
+  optionCard: {
+    width: '46%', // Ajustado para melhor espaçamento em duas colunas
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 15,
+    padding: 15,
+    marginVertical: 10,
+    marginHorizontal: '2%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 90,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+    borderColor: 'rgba(255,255,255,0.1)',
+    borderWidth: 1,
+  },
+  optionCardSelected: {
+    backgroundColor: '#FF6347',
+    borderColor: '#FFD700',
+    borderWidth: 2,
+    shadowColor: '#FFD700',
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+  },
+  optionText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0,0,0,0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  optionTextSelected: {
+    color: '#FFF',
+  },
+  navigationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '95%',
+    marginTop: 40,
+  },
+  navButton: {
+    backgroundColor: '#FF6347',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 15,
+    width: '45%',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    elevation: 10,
+  },
+  navButtonDisabled: {
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderColor: 'rgba(255,255,255,0.2)',
+    borderWidth: 1,
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  navButtonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0,0,0,0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
 });
-
