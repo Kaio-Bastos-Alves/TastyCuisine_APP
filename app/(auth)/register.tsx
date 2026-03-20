@@ -1,3 +1,5 @@
+'use client';
+
 import LGContainer from '../../src/components/LGContainer';
 import { useRouter } from 'expo-router';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';

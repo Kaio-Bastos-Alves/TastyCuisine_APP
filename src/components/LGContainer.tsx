@@ -98,3 +98,4 @@ glassCard: { flex: 1, width: '100%', height: '100%', borderRadius: 0, overflow: 
   content: { flex: 1, padding: 30, justifyContent: 'center', alignItems: 'center', zIndex: 10 },
   glassBorder: { ...StyleSheet.absoluteFillObject, borderRadius: 0, borderWidth: 0, pointerEvents: 'none' },
 });
+

@@ -19,6 +19,16 @@ export default function SplashScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8D775', justifyContent: 'center', alignItems: 'center' },
-  logo: { width: 200, height: 200, resizeMode: 'contain' },
+  container: {
+    flex: 1,
+    backgroundColor: '#ac3e3e52',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    borderRadius: 77,
+  },
 });

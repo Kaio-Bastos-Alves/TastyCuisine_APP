@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, FlatList, Image, ScrollView, TextInput, Touchab
 import { Link } from 'expo-router';
 
 const FEATURED_DISHES = [
-  { id: '1', name: 'Lasanha à Bolonhesa', chef: 'Chef Luigi', image: 'https://via.placeholder.com/150' },
-  { id: '2', name: 'Sushi Combo Especial', chef: 'Chef Kenji', image: 'https://via.placeholder.com/150' },
-  { id: '3', name: 'Hambúrguer Artesanal', chef: 'Chef Marco', image: 'https://via.placeholder.com/150' },
+  { id: '1', name: 'Panqueca de banana', chef: 'Chef Carlos', image: 'https://th.bing.com/th/id/OIP.lxtrvfRDySFiXtqY5m7EYgHaFD?w=233&h=180&c=7&r=0&o=7&pid=1.7&rm=3' },
+  { id: '2', name: 'Bolo de Limão', chef: 'Chef Gabriel', image: 'https://th.bing.com/th/id/OIP.8XEg31oUEArxCoj9-BQxCAHaEK?w=298&h=180&c=7&r=0&o=7&pid=1.7&rm=3' },
+  { id: '3', name: 'Caviar', chef: 'Chef Lucas', image: 'https://th.bing.com/th/id/OIP.ykvAWmcHAKz3ytqFziDn-gHaE8?w=249&h=180&c=7&r=0&o=7&pid=1.7&rm=3' },
 ];
 
 
