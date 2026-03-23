@@ -39,8 +39,8 @@ export  const QUESTIONS: Question[] = [
             {id: 'opt2_3', text: 'Sem Glúten' },
             {id: 'opt2_4', text: 'Sem Lactose' },
             {id: 'opt2_5', text: 'Diabético' },
-            {id: 'opt2_6', text: 'Nenhuma' },
-            {id: 'opt2_7', text: 'Outras' },
+            {id: 'opt2_7', text: 'Oleaginosas' },
+            
 
         ],
     },
@@ -108,7 +108,6 @@ export  const QUESTIONS: Question[] = [
     options: [
       { id: 'opt7_1', text: 'Doces' },
       { id: 'opt7_2', text: 'Salgadas' },
-      { id: 'opt7_3', text: 'Ambas' },
     ],
   },
 
