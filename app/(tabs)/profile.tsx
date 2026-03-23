@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useTheme } from '../themeContext';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const { theme, currentThemeName, isDarkMode, setTheme, toggleDarkMode  } = useTheme();
 
   const MENU_ITEMS = [
     { icon: 'person-outline', label: 'Editar Perfil' },
