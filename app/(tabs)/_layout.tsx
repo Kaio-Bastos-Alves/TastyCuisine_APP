@@ -18,8 +18,8 @@ export default function TabsLayout() {
           paddingBottom: 10,
           paddingTop: 5
         },
-        tabBarActiveTintColor: theme.primary, 
-        tabBarInactiveTintColor: theme.text.primary, // Branco para melhor contraste no vermelho
+        tabBarActiveTintColor: theme.text.primary, 
+        tabBarInactiveTintColor: theme.primary, // Branco para melhor contraste no vermelho
       }}
     >
       <Tabs.Screen 

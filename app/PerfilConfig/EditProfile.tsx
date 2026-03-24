@@ -17,8 +17,8 @@ const AnimatedLGContainer = Animated.createAnimatedComponent(LGContainer);
 
 
 export default function LoginScreen() {
-
   const router = useRouter();
+
   const fillLevel = useSharedValue(0.34);
 
   useEffect(() => {

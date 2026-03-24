@@ -1,19 +1,19 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 // 1. Definição das Cores para cada Tema e Modo
 // Tema "Delícia Roxa"
 const lightPurpleTheme = {
   background: {
-    primary: '#FFFFFF',
-    secondary: '#F8F8F8',
+    primary: '#fce2e2',
+    secondary: '#fcc3c3',
   },
   text: {
     primary: '#333333',
     secondary: '#888888',
   },
-  primary: '#8A2BE2',
-  accent: '#9370DB',
-  button: '#8A2BE2',
+  primary: '#c24b4b',
+  accent: '#c24b4b',
+  button: '#df6161',
   error: '#DC3545',
 };
 
@@ -32,50 +32,50 @@ const darkPurpleTheme = {
   error: '#DC3545',
 };
 
-// Tema "Sabor Azul"
+// Tema "Sabor Laranja"
 const lightBlueTheme = {
   background: {
-    primary: '#FFFFFF',
-    secondary: '#F0F8FF',
+    primary: '#e2cfb9',
+    secondary: '#ebc68e',
   },
   text: {
-    primary: '#2C3E50',
+    primary: '#6d4005',
     secondary: '#7F8C8D',
   },
-  primary: '#3498DB',
-  accent: '#1ABC9C',
-  button: '#3498DB',
+  primary: '#bd7e43',
+  accent: '#bc701a',
+  button: '#d66f1b',
   error: '#E74C3C',
 };
 
 const darkBlueTheme = {
   background: {
-    primary: '#121212',
-    secondary: '#212121',
+    primary: '#4b4339',
+    secondary: '#463a2a',
   },
   text: {
-    primary: '#FFFFFF',
-    secondary: '#BDC3C7',
+    primary: '#eb8a0b',
+    secondary: '#7F8C8D',
   },
-  primary: '#2980B9',
-  accent: '#16A085',
-  button: '#2980B9',
+  primary: '#d6965a',
+  accent: '#bc701a',
+  button: '#5a2f0c',
   error: '#E74C3C',
 };
 
 // Tema "Chef Moderno"
 const lightModernTheme = {
   background: {
-    primary: '#FFFFFF',
-    secondary: '#F5F5F5',
+    primary: '#f3edb5',
+    secondary: '#ebdb84',
   },
   text: {
     primary: '#212121',
     secondary: '#757575',
   },
-  primary: '#FF6347',
-  accent: '#FFD700',
-  button: '#FF6347',
+  primary: '#c2ac2e',
+  accent: '#ac9204',
+  button: '#959722',
   error: '#EF5350',
 };
 

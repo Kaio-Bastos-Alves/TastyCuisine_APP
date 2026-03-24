@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: theme.background.primary, padding: 20, paddingTop: 50 },
     header: { marginBottom: 20 },
-    greeting: { fontSize: 24, fontWeight: 'bold', color: theme.primary },
+    greeting: { fontSize: 24, fontWeight: 'bold', color: theme.text.primary },
     subtitle: { fontSize: 16, color: theme.text.secondary },
     searchBar: {
       backgroundColor: theme.background.secondary,
